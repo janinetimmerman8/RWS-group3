@@ -1,3 +1,9 @@
+## Research questions
+
+## Data
+
+## Tech stack
+
 
 ## Backlog
 | First Header  | Second Header |
