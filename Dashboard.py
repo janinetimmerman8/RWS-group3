@@ -11,7 +11,7 @@ from pathlib import Path
 
 # Import visualize function to make things more organized
 # from Map_function_dashboard import visualize_map
-from Map_function_dashboard import DutchRDtoWGS84
+# from Map_function_dashboard import DutchRDtoWGS84
 
 # Create structure and headers
 st.header('Optimization of road inspector locations', divider='red')
