@@ -29,7 +29,7 @@ st.sidebar.write('Made by: ...')
 # incidents = pd.read_csv(incidents_path, sep=';')
 
 
-map_path = Path(__file__).parents[0] / "Dashboard_data\Dashboard_map.html"
+map_path = Path(__file__).parents[0] / "Dashboard_data/Dashboard_map.html"
 
 HtmlFile = open(map_path, 'r', encoding='utf-8')
 source_code = HtmlFile.read() 
