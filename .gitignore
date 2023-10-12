@@ -2,3 +2,5 @@
 *.csv
 Shapefiles/
 Road_data/
+__pycache__/
+Map_function_dashboard.py
