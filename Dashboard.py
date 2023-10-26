@@ -51,7 +51,7 @@ df_results = pd.read_csv(results_path, index_col=0)
 tab_a.dataframe(df_results)
 
 # Show boxplots to compare results
-image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/Opt_boxplot.png"
+image_path = Path(__file__).parents[0] / "Dashboard_data/Opt_boxplot.png"
 image_result = Image.open(image_path)
 tab_b.image(image_result)
 
