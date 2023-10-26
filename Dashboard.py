@@ -12,6 +12,7 @@ from pathlib import Path
 from PIL import Image
 import pickle
 import matplotlib.collections as mcoll
+import networkx as nx
 
 # Create structure and headers
 st.header('Optimization of road inspector locations', divider='red')
