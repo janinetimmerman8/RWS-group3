@@ -1,5 +1,5 @@
 ,Method,No. of inspectors,Average travel time [min:sec],Median travel time [min:sec]
-0,Clustering 1,47,17:59,14:09
-1,Clustering 2,60,0,0
-2,Machine Learning,50,0,0
+0,K-means - distance,47,17:59,14:09
+1,K-means - travel time,60,0,0
+2,Simulated annealing,50,0,0
 3,Frequency-based,0,0,0

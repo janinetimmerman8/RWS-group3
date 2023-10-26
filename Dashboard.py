@@ -192,8 +192,8 @@ st.write('These tabs delve a bit deeper into the methods used to come to the res
 # Tabs for statistics
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["Incidents", 
                                             "Network",
-                                            "Clustering 1 & 2",
-                                            "Machine Learning",
+                                            "K-means method",
+                                            "Simulated Annealing",
                                             "Frequency-based"])
 
 
@@ -223,7 +223,8 @@ image_speed = Image.open(image_path)
 tab2.image(image_speed)
 
 # Tab 3
-tab3.write('This figure shows how the clustering optimization methods work')
+tab3.write('This figure shows how the k-means optimization methods work.')
+tab3.write('Method 1 used distance and method 2 uses travel time')
 
 image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/clustering_explanation.PNG"
 image_cluster = Image.open(image_path)
