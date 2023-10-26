@@ -6,3 +6,4 @@ pandas
 branca
 streamlit_folium
 pathlib
+networkx
