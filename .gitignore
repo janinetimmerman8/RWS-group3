@@ -1,5 +1,4 @@
 .conda/
-*.csv
 Shapefiles/
 Road_data/
 __pycache__/
