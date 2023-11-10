@@ -374,6 +374,6 @@ tab4.image(image_sa)
 # Tab 5
 tab5.write('This figure shows how the frequency-based optimization works:')
 
-image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/frequency_method.PNG"
+image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/frequency_method.png"
 image_freq = Image.open(image_path)
 tab5.image(image_freq)
