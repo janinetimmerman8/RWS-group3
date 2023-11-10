@@ -74,6 +74,18 @@ image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/Validation_plot
 val_results = Image.open(image_path)
 tab_a.image(val_results)
 
+text = '''
+The following figure is a heatmap showing the how often the travel time is below 18 minutes
+for each day and time of the day for all algorithms.
+'''
+
+tab_a.markdown(text)
+
+image_path = Path(__file__).parents[0] / "heatmap_data.png"
+val_results = Image.open(image_path)
+tab_a.image(val_results)
+
+
 # Show the training results
 text = '''
 Below you'll see the results of the training algorithm. First the kmeans distance algorithm was performed which 
@@ -275,9 +287,10 @@ show you something about the different steps that were taken in the process.
 st.markdown(text)
 
 # Tabs for statistics
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["Incidents", 
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Incidents", 
                                             "Network",
-                                            "K-means method",
+                                            "K-means distance",
+                                            "K-means travel time",
                                             "Simulated Annealing",
                                             "Frequency-based"])
 
@@ -355,25 +368,34 @@ tab2.image(image_speed)
 
 # Tab 3
 text = '''
-This figure shows how the k-means optimization methods work. Method 1 uses the distance and 
-method 2 uses the travel time.
+This figure shows how the k-means optimization method for distance works:
 '''
 tab3.markdown(text)
 
-image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/clustering_explanation.PNG"
+image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/slide_1.PNG"
 image_cluster = Image.open(image_path)
 tab3.image(image_cluster)
 
 # Tab 4
-tab4.write('This figure shows how the simulated annealing method works:')
+text = '''
+This figure shows how the k-means optimization method for travel time works:
+'''
+tab4.markdown(text)
+
+image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/slide_2.PNG"
+image_cluster = Image.open(image_path)
+tab4.image(image_cluster)
+
+# Tab 5
+tab5.write('This figure shows how the simulated annealing method works:')
 
 image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/sa_explanation.PNG"
 image_sa = Image.open(image_path)
-tab4.image(image_sa)
+tab5.image(image_sa)
 
-# Tab 5
-tab5.write('This figure shows how the frequency-based optimization works:')
+# Tab 6
+tab6.write('This figure shows how the frequency-based optimization works:')
 
 image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/frequency_method.png"
 image_freq = Image.open(image_path)
-tab5.image(image_freq)
+tab6.image(image_freq)
