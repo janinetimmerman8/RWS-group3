@@ -9,3 +9,5 @@ This notebook will guide you through our process and will link you to relevant f
 You can also read this notebook as html file. 
 This notebook, including all other important notebook are exported to html and can be found in the folder:
 "Notebooks_html"
+
+The backlog can be found in the wiki on this github. There is an overview of tasks done for each week. 
