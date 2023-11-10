@@ -100,10 +100,43 @@ image_path = Path(__file__).parents[0] / "Dashboard_data/Opt_boxplot.png"
 image_result = Image.open(image_path)
 tab_b.image(image_result)
 
-# Show some shortest path examples
-tab_c.write('The map here shows the areas that each road inspector covers for method 1, minimum travel times.')
+text = '''
+Besides the optimal conditions, we also looked at peak hour conditions. Due to time constraints
+we did not manage to run all algorithms with peak hour conditions on the roads. The results of the
+kmeans distance algorithm can be found below.
 
-# tab_c.write('NEED TO BE UPDATED WITH REAL POINTS INSTEAD OF RANDOM')
+As you can see, to achieve a similar level of service, a lot more road inspectors are needed.
+With almost 40 inspectors extra, still not the same average travel time is achieved.
+This can be important because that means that the same level of serive can't be given throughout the whole day
+with the current 47 inspectors. 
+
+For future research it might be good to look more into the effects of the average travel time in peak hours
+by running it with more different algorithms and by providing a good validation.
+'''
+tab_b.markdown(text)
+
+results_path = Path(__file__).parents[0] / "Dashboard_data/Peak_results_df"
+df_results = pd.read_csv(results_path, index_col=0)
+tab_b.dataframe(df_results)
+
+# Show some shortest path examples
+
+text = '''
+The following map shows the area each road inspector covers in optimal conditions
+for method 1: kmeans distance algorithm. Each red dot is a road inspector,
+while each colored area is the area that is served by that road inspector, based on the training data. 
+In the figure below, you can select a number and see what the area is of a specific road inspector.
+
+As you can see, not each covered area is completely logical. For example area 1 shows 2 unconnected road sections
+as area. This could be explained by the way this kmeans distance clustering algorithm works.
+This might also explain why the algorithm seems to perform significantly better in the validation, compared to 
+the training results (10 minutes vs 18 minutes). The validation algorithm looks for the nearest inspector
+for each incident, while the training algorithm made clusters for each inspector.
+
+'''
+
+tab_c.markdown(text)
+
 image_path = Path(__file__).parents[0] / "Dashboard_data/Inspectorareas.png"
 image_path = Image.open(image_path)
 tab_c.image(image_path)
@@ -233,7 +266,14 @@ else:
 
 
 st.divider()
-st.write('These tabs delve a bit deeper into the methods used to come to the results and the different steps taken')
+
+text = '''
+The following tabs delve a bit deeper into the way the different algorithms work and will also
+show you something about the different steps that were taken in the process.
+'''
+
+st.markdown(text)
+
 # Tabs for statistics
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["Incidents", 
                                             "Network",
@@ -243,48 +283,97 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(["Incidents",
 
 
 # Tab 1, incidents
-tab1.write("Statistics of incidents")
-tab1.write('This figures shows how the incidents were spread over the day')
+text = '''
+For this project, we were given a list with the locations and timestamps of many incident.
+So the first step of this process was to analyse and filter those incidents so it could be used in the 
+different algorithms. The figure below shows the distribution of incidents throughout the day.
+
+The results seem logical. During the day more incidents happen compared to the night, and more incidents
+happen during peak hours compared to outside of peak hours. This seems to correlate with 
+the fact that most cars drive during peak hours, and the least number of cars drive during the night.
+'''
+
+
+tab1.markdown(text)
 
 image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/incident_day.png"
 image_incident = Image.open(image_path)
 tab1.image(image_incident)
 
 # Tab 2 speed data
-tab2.write('To use the algorithms, a networkX graph was made to easily find the shortest path.')
-tab2.write('However, the graph was unconnected when extracting the data from the shapefile')
-tab2.write('Using two different methods, the missing edges were estimated. Those can be seen in the following graph:')
+text = '''
+To use the algorithms, a quick way had to be found to calculate the shortest travel time between two points.
+For this, the python module NetworkX was used. With this module it was possible to make a graph of the 
+network were all road sections were edges and each point were two roadsections touched were nodes. 
+
+However, when a graph was made using the edges given in the shape file of the Dutch road network,
+the network seemed to be unconnected.
+Using two different algorithms, edges were created on missing places to connect the network.
+This way, it is now possible to traverse from and to each point in the networ.
+
+The graph below visualizes this. The blue edges are the edges that were originally present in the network. 
+The red edges were the edges that were created when running the first algorithm. This algorithm
+was only used or creating short edges. For example: when two different road sectiond did not completely align,
+two different nodes were created while only one would be sufficient. Another possible use was to connect an off- and onramp
+with each other so it was possible for the road inspector to turn around and go to the different side of the highway.
+The green edges are mainly longer edges and were created to connect separate network parts. A bit of an extreme example
+is the the road in "Zeeland" which located very far from the main network. With a green edge, it was now possible 
+to travel from there to the rest of the Netherlands.
+
+It should be noted that the algorithm only made assumptions about the how the roads could be connected
+and is thus not exactly the same as reality. However judging from the graph below
+and several tests that were run to find the shortest path, the network seemed to be an acceptable model
+to use to calculate the paths of the road inspectors. 
+
+'''
+
+tab2.markdown(text)
 
 image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/connecting_network.png"
 image_network = Image.open(image_path)
 tab2.image(image_network)
 
-tab2.write("Besides that, the speed on each road section had to be calculated")
-tab2.write("Here is some info about how speed is calculated ...")
-tab2.write("And here a nice small boxplot comparing maximum speed on roads and estimated peak hour speed")
+text = '''
+Besides connecting the network, it was also needed to calculate the travel speed on the roads.
+This could then be used to calculate the travel time needed to traverse each road section.
+For most road sections, the maximum speed could easily be found. However, for several sections there was no data.
+To fill up this missing data the speed on adjacent road sections was used to fill in the gaps.
+
+After that, the speed during the peak hours was estimated by using a data-driven algorithm about
+the average speed on Dutch road networks. Again, not all data was available. So the peak hour speed was first calculated
+for all road sections with enough data. We found an average decrease of 15{%} in speed. This was then used to 
+calculate the speed during peak hours for the remaining road sections.
+
+A boxplot showing the speed on the road sections in optimal and congested situations is given below.
+'''
+
+tab2.markdown(text)
 
 image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/Speed_boxplot.png"
 image_speed = Image.open(image_path)
 tab2.image(image_speed)
 
 # Tab 3
-tab3.write('This figure shows how the k-means optimization methods work.')
-tab3.write('Method 1 used distance and method 2 uses travel time')
+text = '''
+This figure shows how the k-means optimization methods work. Method 1 uses the distance and 
+method 2 uses the travel time.
+'''
+tab3.markdown(text)
 
 image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/clustering_explanation.PNG"
 image_cluster = Image.open(image_path)
 tab3.image(image_cluster)
 
 # Tab 4
-tab4.write('This figure shows how the simulated annealing method works')
+tab4.write('This figure shows how the simulated annealing method works:')
 
 image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/sa_explanation.PNG"
 image_sa = Image.open(image_path)
 tab4.image(image_sa)
 
 # Tab 5
-tab5.write('This figure shows how the frequency-based optimization works')
+tab5.write('This figure shows how the frequency-based optimization works:')
 
-image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/frequencybased_explanation.PNG"
+image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/frequency_method.PNG"
 image_freq = Image.open(image_path)
 tab5.image(image_freq)
