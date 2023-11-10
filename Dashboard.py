@@ -18,12 +18,20 @@ import networkx as nx
 st.header('Optimization of road inspector locations', divider='red')
 st.subheader('A data story by RWS group 3')
 
-st.write('This dashboard shows the results of this data science project. Enjoy!')
-st.write('This map shows all the results')
+text = '''
+Hello everyone, this dashboard shows all the results of our data science project.
 
+**Enjoy!**
 
-# st.sidebar.write('Made by: RWS group 3')
-# st.sidebar.write('[insert names]')
+First, the map below shows all the locations of the inspectors. We used 4 different algorithms to
+find the best results. You can choose which results you would like to see. 
+Besides that, you can also show the speeds on the highway (for both optimal conditions and peak hour conditions).
+It is also possible to visualize the incidents using a cluster method or a heatmap. 
+(This feature gets available when hovering over the layer icons on the right. New options will pop up.)
+
+'''
+
+st.markdown(text)
 
 # Load data
 incidents_df_path = map_path = Path(__file__).parents[0] / "Dashboard_data/incidents_data"
@@ -43,14 +51,51 @@ components.html(source_code, height = 600, width=850)
 st.divider()
 st.write('The following tabs show some more information about the final results')
 # Make tabs for results
-tab_a, tab_b, tab_c = st.tabs(['Overview results', 'Boxplots', 'Inspector areas'])
+tab_a, tab_b, tab_c= st.tabs(['Validation results', 'Training results', 'Inspector areas'])
 
-# Show result summary
-results_path = image_path = Path(__file__).parents[0] / "Dashboard_data/Results_df"
+# Show results validation
+text = '''
+In this tab, you can see the results of the validation of the algorithms.
+The graph below shows how each algorithm performed when calculating the travel times from a set of incidents
+to the nearest inspector. The data was then separated by day and time in the week to show how the results vary over time.
+
+According to the validation results, the **kmeans distance** algorithm performs best with an average travel time of
+only **10.3 minutes**! Secondly comes the simmulated annealing algorithm with a travel time of 12.2 minutes,
+closely followed by the kmeans travel time algorithm with 12.5 mintues. Lastly is the frequency-based algorithm.
+Even though it performs worse than the other algorithms, it still managed to achieve an average travel time
+less than 18 minutes. 
+
+This means, according to this validation, that all algorithms satisfy the requirement to have an average 
+travel time of less than 18 minutes.
+'''
+tab_a.markdown(text)
+
+image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/Validation_plot.png"
+val_results = Image.open(image_path)
+tab_a.image(val_results)
+
+# Show the training results
+text = '''
+Below you'll see the results of the training algorithm. First the kmeans distance algorithm was performed which 
+computed the least number of inspectors needed to get an average travel time less than 18 minutes. 
+This brought us to **47 inspectors**. After that, the remaining algorithms were used to determine the best locations
+for road inspectors while using only 47 inspectors. The average and median travel times estimated using this
+method are shown in the table below.
+
+Beneath that, there is a boxplot which shows the distribution of shortest travel time to each incident,
+using the location of the inspectors. According to these results, the kmeans travel time algorithm
+achieves the best results with the shortest travel times, closely followed by the simulated annealing method.
+On third place comes the kmeans distance algoritm with an average of just under 18 minutes,
+and finally the frequency based algorithm with an average travel time of almost 1 hour.
+
+'''
+
+tab_b.markdown(text)
+
+results_path = Path(__file__).parents[0] / "Dashboard_data/Results_df"
 df_results = pd.read_csv(results_path, index_col=0)
-tab_a.dataframe(df_results)
+tab_b.dataframe(df_results)
 
-# Show boxplots to compare results
 image_path = Path(__file__).parents[0] / "Dashboard_data/Opt_boxplot.png"
 image_result = Image.open(image_path)
 tab_b.image(image_result)

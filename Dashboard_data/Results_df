@@ -1,5 +1,5 @@
 ,Method,No. of inspectors,Average travel time [min:sec],Median travel time [min:sec]
 0,K-means - distance,47,17:59,14:09
-1,K-means - travel time,60,10:60,10:44
-2,Simulated annealing,50,0,0
-3,Frequency-based,71,16:51,10:16
+1,K-means - travel time,47,12:23,11:53
+2,Simulated annealing,47,13:46,13:43
+3,Frequency-based,47,59:26,53:43
