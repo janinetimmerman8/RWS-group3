@@ -81,7 +81,7 @@ for each day and time of the day for all algorithms.
 
 tab_a.markdown(text)
 
-image_path = Path(__file__).parents[0] / "heatmap_data.png"
+image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/new_heatmap.png"
 val_results = Image.open(image_path)
 tab_a.image(val_results)
 
