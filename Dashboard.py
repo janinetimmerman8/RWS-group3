@@ -354,23 +354,26 @@ image_speed = Image.open(image_path)
 tab2.image(image_speed)
 
 # Tab 3
-tab3.write('This figure shows how the k-means optimization methods work.')
-tab3.write('Method 1 used distance and method 2 uses travel time')
+text = '''
+This figure shows how the k-means optimization methods work. Method 1 uses the distance and 
+method 2 uses the travel time.
+'''
+tab3.markdown(text)
 
 image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/clustering_explanation.PNG"
 image_cluster = Image.open(image_path)
 tab3.image(image_cluster)
 
 # Tab 4
-tab4.write('This figure shows how the simulated annealing method works')
+tab4.write('This figure shows how the simulated annealing method works:')
 
 image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/sa_explanation.PNG"
 image_sa = Image.open(image_path)
 tab4.image(image_sa)
 
 # Tab 5
-tab5.write('This figure shows how the frequency-based optimization works')
+tab5.write('This figure shows how the frequency-based optimization works:')
 
-image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/frequencybased_explanation.PNG"
+image_path = Path(__file__).parents[0] / "Dashboard_data/Figures/frequency_method.PNG"
 image_freq = Image.open(image_path)
 tab5.image(image_freq)
